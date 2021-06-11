@@ -34,6 +34,12 @@ h1 {
 }
 
 .btn {
+  /* Ripple effect*/
+  position: relative;
+  overflow: hidden;
+  transition: background 400ms;
+
+  /* Botão */
   display: inline-block;
   text-decoration: none;
   background-color: #112705;
@@ -43,4 +49,20 @@ h1 {
   width: 30px;
   border: none;
   border-radius: 3px;
+}
+
+/* Ripple effect */
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 300ms linear;
+  background-color: #94ec61
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }

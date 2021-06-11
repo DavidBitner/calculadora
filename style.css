@@ -1,0 +1,46 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-image: linear-gradient(to bottom right, #112705, #1f4608);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+  text-align: center;
+  width: 300px;
+}
+
+h1 {
+  margin: 50px;
+  color: #fbfef8;
+}
+
+#visores {
+  text-align: right;
+  margin: 0 25px;
+  color: #fbfef8;
+}
+
+#view {
+  font-size: 1rem;
+  margin: 0px;
+}
+
+#main-view {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #112705;
+  color: #fbfef8;
+  margin: 5px;
+  padding: 10px;
+  width: 30px;
+  border: none;
+  border-radius: 3px;
+}

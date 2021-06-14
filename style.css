@@ -51,6 +51,13 @@ h1 {
   border-radius: 3px;
 }
 
+.btn:hover {
+  box-shadow: 0 0 1px #fbfef8;
+}
+
+.btn-main {
+  background-color: #040901;
+}
 /* Ripple effect */
 span.ripple {
   position: absolute;

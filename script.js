@@ -42,6 +42,8 @@ const subtracao = document.querySelector("#subtracao");
 const adicao = document.querySelector("#adicao");
 const igual = document.querySelector("#igual");
 
+const numeros = document.getElementsByClassName("btn-numero");
+
 // Botão limpar tudo
 clear_all.addEventListener("click", function () {
   view_all.innerHTML = "0";
@@ -52,3 +54,25 @@ clear.addEventListener("click", function () {
   view_all.innerHTML = "0";
   view.innerHTML = "0";
 });
+
+// Botão backspace
+backspace.addEventListener('click', function () {
+  if (view_all.textContent.length > 1) {
+    let txt = view_all.textContent
+    txt = txt.slice(0, -1)
+    view_all.innerHTML = txt
+  } else {
+    view_all.innerHTML = 0
+  }
+})
+
+// Botões dos numeros
+for (const numero of numeros) {
+  numero.addEventListener("click", function () {
+    if (view_all.textContent == 0) {
+      view_all.innerHTML = numero.textContent;
+    } else {
+      view_all.innerHTML += numero.textContent;
+    }
+  });
+}

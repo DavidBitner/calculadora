@@ -28,10 +28,10 @@ for (const btn of btns) {
 
 // Variaveis
 const view = document.querySelector("#view");
-const view_all = document.querySelector("#main-view");
+const main_view = document.querySelector("#main-view");
 
-const clear_all = document.querySelector("#clear-all");
 const clear = document.querySelector("#clear");
+const clear_all = document.querySelector("#clear-all");
 const backspace = document.querySelector("#backspace");
 const negativo = document.querySelector("#negativo");
 const virgula = document.querySelector("#virgula");
@@ -44,35 +44,111 @@ const igual = document.querySelector("#igual");
 
 const numeros = document.getElementsByClassName("btn-numero");
 
+let operacao = "none";
+
+// Função de limpeza
+function limpar(main = 0, sec = false, txt = "") {
+  if (sec) {
+    view.innerHTML = txt;
+  }
+
+  main_view.innerHTML = main;
+}
+
+// Função para transferir numero do visor de baixo para o de cima
+function transferir(op = "none") {
+  limpar(0, true, main_view.textContent + ` ${op}`);
+}
+
+// Função de resolução da conta
+function resolucao(igual = false) {
+  let primeiro = Number(view.textContent.slice(0, -1));
+  let segundo = Number(main_view.textContent);
+  let resultado = 0;
+  if (operacao == "÷") {
+    resultado = primeiro / segundo;
+  } else if (operacao == "*") {
+    resultado = primeiro * segundo;
+  } else if (operacao == "-") {
+    resultado = primeiro - segundo;
+  } else if (operacao == "+") {
+    resultado = primeiro + segundo;
+  }
+
+  if (view.textContent != 0 && main_view.textContent != 0) {
+    if (igual) {
+      limpar(resultado, true, 0);
+      operacao = "none";
+    } else {
+      limpar(0, true, resultado + ` ${operacao}`);
+    }
+  }
+}
+
+// Função de quando os botões das operações da conta forem clicados
+/* Essa função serve para garantir que a calculadora fara a operação 
+certa depois de clicar em um botão da operação, sem essa função a 
+calculadora não muda a operação caso já exista uma conta sendo feita. */
+function operador(operador = "") {
+  if (operacao == "none") {
+    operacao = operador;
+    transferir(operacao);
+  } else {
+    resolucao();
+    operacao = operador;
+    limpar(0, true, view.textContent.slice(0, -1) + operacao);
+  }
+}
+
 // Botão limpar tudo
-clear_all.addEventListener("click", function () {
-  view_all.innerHTML = "0";
+clear.addEventListener("click", function () {
+  limpar();
 });
 
 // Botão limpar atual
-clear.addEventListener("click", function () {
-  view_all.innerHTML = "0";
-  view.innerHTML = "0";
+clear_all.addEventListener("click", function () {
+  limpar(0, true, 0);
+  operacao = "none";
 });
 
 // Botão backspace
-backspace.addEventListener('click', function () {
-  if (view_all.textContent.length > 1) {
-    let txt = view_all.textContent
-    txt = txt.slice(0, -1)
-    view_all.innerHTML = txt
+backspace.addEventListener("click", function () {
+  if (main_view.textContent.length > 1) {
+    let txt = main_view.textContent.slice(0, -1);
+    limpar(txt);
   } else {
-    view_all.innerHTML = 0
+    limpar();
   }
-})
+});
 
 // Botões dos numeros
 for (const numero of numeros) {
   numero.addEventListener("click", function () {
-    if (view_all.textContent == 0) {
-      view_all.innerHTML = numero.textContent;
+    if (main_view.textContent == 0) {
+      limpar(numero.textContent);
     } else {
-      view_all.innerHTML += numero.textContent;
+      main_view.innerHTML += numero.textContent;
     }
   });
 }
+
+// Botões das operações
+divisao.addEventListener("click", function () {
+  operador("÷");
+});
+
+multiplicacao.addEventListener("click", function () {
+  operador("*");
+});
+
+subtracao.addEventListener("click", function () {
+  operador("-");
+});
+
+adicao.addEventListener("click", function () {
+  operador("+");
+});
+
+igual.addEventListener("click", function () {
+  resolucao(true);
+});

@@ -57,14 +57,31 @@ function limpar(main = 0, sec = false, txt = "") {
 
 // Função para transferir numero do visor de baixo para o de cima
 function transferir(op = "none") {
-  limpar(0, true, main_view.textContent + ` ${op}`);
+  let main = main_view.textContent;
+
+  if (main.slice(-1) == ",") {
+    main = main.replace(",", "");
+  }
+
+  limpar(0, true, main + ` ${op}`);
 }
 
 // Função de resolução da conta
 function resolucao(igual = false) {
-  let primeiro = Number(view.textContent.slice(0, -1));
-  let segundo = Number(main_view.textContent);
+  let primeiro = view.textContent.slice(0, -2);
+  let segundo = main_view.textContent;
   let resultado = 0;
+
+  if (primeiro.includes(",")) {
+    primeiro = primeiro.replace(",", ".");
+  }
+  if (segundo.includes(",")) {
+    segundo = segundo.replace(",", ".");
+  }
+
+  primeiro = Number(primeiro);
+  segundo = Number(segundo);
+
   if (operacao == "÷") {
     resultado = primeiro / segundo;
   } else if (operacao == "*") {
@@ -73,6 +90,12 @@ function resolucao(igual = false) {
     resultado = primeiro - segundo;
   } else if (operacao == "+") {
     resultado = primeiro + segundo;
+  }
+
+  resultado = String(resultado);
+
+  if (resultado.includes(".")) {
+    resultado = resultado.replace(".", ",");
   }
 
   if (view.textContent != 0 && main_view.textContent != 0) {
@@ -151,4 +174,36 @@ adicao.addEventListener("click", function () {
 
 igual.addEventListener("click", function () {
   resolucao(true);
+});
+
+// Botão negativo
+negativo.addEventListener("click", function () {
+  let n = main_view.textContent;
+
+  if (n.includes(",")) {
+    n = n.replace(",", ".");
+  }
+
+  n = Number(n);
+
+  if (n > 0 || n < 0) {
+    n *= -1;
+  }
+
+  n = String(n);
+
+  if (n.includes(".")) {
+    n = n.replace(".", ",");
+  }
+
+  limpar(n);
+});
+
+// Botão virgula
+virgula.addEventListener("click", function () {
+  let n = main_view.textContent;
+  if (!n.includes(",")) {
+    n += ",";
+  }
+  limpar(n);
 });
